@@ -538,6 +538,41 @@ remain unchanged. The new XCF is1459bytes; the pixel-only PNG is124bytes. Attrib
 This externally qualifies this producer's byte order, not every historical XCF,
 and the preview is a source storage witness rather than a PhotoCraft rendering oracle.
 
+
+### Historical XCF10 unreleased development producer
+
+Two `gimp/historical-2-9-5-0874703-v010-{u16-asymmetric,float}-zlib` XCF/PNG
+pairs are generated from scratch through public PDB APIs in an **unmodified
+GNOME development commit**, `0874703e3b7f2d211816feccd745404ed8ec3d71`, built
+locally for Linux x86_64. This is GIMP2.9.5 development history, **not an official
+released binary**. The February20 introduction commit could save v10 but rejected
+its own v10 reopen; this February21 authentic snapshot contains the upstream loader
+fix and both saves are deleted and independently reopened twice. No source patch,
+input XCF or version-header rewriting is involved.
+
+The exact public runtime mode metadata declares mode30 `LAYER-MODE-MULTIPLY`
+(Multiply); these files store that actual mode. Mode28 in this snapshot is
+`LAYER-MODE-NORMAL-LINEAR`, so later enum names must not be retrojected into it.
+Both headers are actualv10 with32-bit pointers and internal zlib compression2;
+precisions are250/U16 gamma and650/F32 gamma. All48 raw stored pixels equal two
+fresh public readbacks and independent original formulas. U16 uses the earlier
+asymmetric integer pattern. F32 uses `f32(f32(n)*f32(1.0/255.0))` from the earlier
+procedural U8 values (reciprocal bits `0x3b808081`), preserving the exact rounding;
+ordinary exact division can differ by1ulp. Byte order is externally established
+for this producer, never inferred automatically from the historical header.
+
+Load `tools/gimp-xcf/historical_2_9_5_v010.scm` in that exact isolated built
+runtime, then call `(historical-v10-all "<output-directory>")`. Sanitize only the
+new PNGs using `historical_png_metadata.py:sanitize`. The adjacent
+`historical_2_9_5_v010.provenance.json` records the pinned archive/dependency hashes,
+compiler and exact build flags, public mode/precision declarations, all pixel
+vectors, privacy checks and reproduction. No ICC/font/profile assets or private
+metadata are bundled. XCF sizes are1462/U16 and1503/F32 bytes; sanitized previews
+are124 and129bytes, with critical pixel chunks unchanged. These previews describe
+source storage observations, not a requirement for PhotoCraft to emulate GIMP.
+See [qualification attribution](tools/gimp-xcf/ATTRIBUTION.md).
+
+
 ## The Crafting Apps
 
 PhotoCraft is one of the **Crafting Apps**: free, open-source creative tools from the
