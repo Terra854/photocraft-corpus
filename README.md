@@ -491,7 +491,7 @@ do **not** identify producer byte order: external provenance establishes it.
 They must not be represented as universally little-endian historical XCFs.
 Version9 uses Overlay mode23; version11 uses Normal mode28 and 64-bit offsets.
 The official writer promotes version10 to11, so this batch does not qualify an
-independent version10 producer. Version8 F32 zlib now has a genuine ordinary GUI Save As witness: `historical-2-9-6-v008-float-zlib.xcf`. Both independent stock reopen passes and the decoded stored bytes match all48 original samples exactly; version8 U16 producer coverage is not claimed. Stock metadata is cleared before save and the writer
+independent version10 producer. Version8 F32 zlib now has a genuine ordinary GUI Save As witness: `historical-2-9-6-v008-float-zlib.xcf`. Both independent stock reopen passes and the decoded stored bytes match all48 original samples exactly; the separate asymmetric version8 U16 zlib witness below now qualifies precision250 as well. Stock metadata is cleared before save and the writer
 regenerates nonpersonal dimensions/resolution XML; PNGs retain pixel chunks only.
 
 
@@ -515,8 +515,28 @@ It contains no local paths. The XCF is1499bytes and its sanitized PNG is129bytes
 
 This qualifies this Windows F32 zlib producer case; it does not qualify every historical
 producer or version10. Repeated ordinary stock public-PDB saves using modern modes
-produced version11; no verified ordinary version10 authoring route is established.
+produced version11. The separate unmodified2.9.5 development snapshot below now supplies genuine version10 witnesses; it is not a released binary.
 
+
+### Historical XCF8 asymmetric U16 internal zlib witness
+
+`historical-2-9-6-v008-u16-asymmetric-zlib.xcf` is an ordinary stock2.9.6 save:
+load the qualified F32 v8 file, convert through the public precision API to U16,
+copy all48 original asymmetric U16 pixels from the qualified v7 source through
+public get/set-pixel APIs, and save to a new name. The loaded image retains its
+internal zlib choice, so no second manual Save As is needed. Delete and reopen
+twice to query all48 raw pixels; the independently decoded zlib bytes match both
+readbacks and the original asymmetric source exactly. The first sample is
+little-endian `(4660,13398,30874,16384)`, raw `341256349a780040`.
+
+Load `historical_2_9_6.scm` and `historical_2_9_6_v008_u16.scm`, then call
+`(historical-v8-u16-asymmetric "<v8-float-zlib.xcf>" "<v7-u16-asymmetric-rle.xcf>" "<output-directory>")`.
+Sanitize only the generated PNG with `historical_png_metadata.py:sanitize`.
+The adjacent `historical_2_9_6_v008_u16.provenance.json` records source hashes,
+all48 pixel vectors, privacy checks and exact reproduction. Both source files
+remain unchanged. The new XCF is1459bytes; the pixel-only PNG is124bytes. Attribution for this qualification batch is recorded in [tools/gimp-xcf/ATTRIBUTION.md](tools/gimp-xcf/ATTRIBUTION.md).
+This externally qualifies this producer's byte order, not every historical XCF,
+and the preview is a source storage witness rather than a PhotoCraft rendering oracle.
 
 ## The Crafting Apps
 
