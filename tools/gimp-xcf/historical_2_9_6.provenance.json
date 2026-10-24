@@ -4356,7 +4356,7 @@
   "previewPolicy": "PNG critical chunks retained exactly; all ancillary export metadata and profiles removed by existing historical_png_metadata.sanitize. PNG previews are source rendering/storage evidence, not native GIMP-emulation acceptance.",
   "versionLimits": {
     "7": "high-depth precision and legacyNormal, RLE; genuine original producer bytes",
-    "8": "Unqualified: no public2.9.6PDBcompression setter; normal GUI compression SaveAs attempt canceled safely without changing original files. No version8 witness is claimed.",
+    "8": "Separate ordinary-GUI F32 zlib witness now qualified; see historical_2_9_6_v008.provenance.json. U16 producer case not claimed.",
     "9": "actualOverlay mode23 raises writer version9",
     "10": "writer explicitly promotes10 to11; no genuine v10 produced/claimed",
     "11": "actualNormal mode28 raises10 then automatic11; native64bit pointers"

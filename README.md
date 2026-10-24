@@ -119,7 +119,7 @@ There is one top-level folder per source, i.e. per application that authored the
 | Folder | Source | Files |
 |---|---|---:|
 | [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 258 |
-| [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6 and the documented historical releases, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 104 |
+| [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6 and the documented historical releases, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 106 |
 
 The repository also contains:
 
@@ -292,9 +292,9 @@ then follow the [pinning workflow](#pinning-workflow).
 
 ## `gimp/`: GIMP XCF oracles
 
-50 small XCF files written by **GIMP 3.2.6** and the documented historical releases,
+51 small XCF files written by **GIMP 3.2.6** and the documented historical releases,
 each saved next to the author's merged preview as a PNG, plus one original linked-resource PNG
-and three compressed wrappers: **104 files**. The modern Python generator and historical
+and three compressed wrappers: **106 files**. The modern Python generator and historical
 ScriptFu generators live in [`tools/gimp-xcf/`](tools/gimp-xcf). Adjacent provenance records
 distinguish ordinary authoring from historical graph bootstrap/rewrite observations.
 PhotoCraft tests check source storage against procedural facts and imported content against
@@ -491,9 +491,32 @@ do **not** identify producer byte order: external provenance establishes it.
 They must not be represented as universally little-endian historical XCFs.
 Version9 uses Overlay mode23; version11 uses Normal mode28 and 64-bit offsets.
 The official writer promotes version10 to11, so this batch does not qualify an
-independent version10 producer. Version8 remains unqualified: a separate ordinary GUI compression save was
-canceled safely without modifying a source, so no version8 witness is claimed. Stock metadata is cleared before save and the writer
+independent version10 producer. Version8 F32 zlib now has a genuine ordinary GUI Save As witness: `historical-2-9-6-v008-float-zlib.xcf`. Both independent stock reopen passes and the decoded stored bytes match all48 original samples exactly; version8 U16 producer coverage is not claimed. Stock metadata is cleared before save and the writer
 regenerates nonpersonal dimensions/resolution XML; PNGs retain pixel chunks only.
+
+
+### Historical XCF8 internal zlib witness
+
+Use the verified stock GIMP 2.9.6 development runtime documented above. This is historical
+format coverage, separate from stable GIMP2.10.32/3.2.6 coverage. Generate the original
+v007 F32 case with `historical_2_9_6.scm`, open it in that runtime, choose **Save As**, give
+it the new name `historical-2-9-6-v008-float-zlib.xcf`, enable **Save this XCF file with
+better but slower compression**, and save. The public PDB has no compression selector;
+this normal GUI step is deliberately recorded rather than represented as fully automated.
+Do not change the precision, legacy Normal mode or original pixel data.
+
+Load `historical_2_9_6.scm` and `historical_2_9_6_v008.scm` in the same stock runtime,
+then call `(historical-v8-readback-and-preview "<saved-xcf>" "<facts-file>" "<preview-png>")`.
+Sanitize only the exported PNG's ancillary chunks with the existing
+`historical_png_metadata.py:sanitize` helper. The adjacent
+`historical_2_9_6_v008.provenance.json` records all48 raw reopened pixel vectors,
+source and preview hashes, compression2/precision650 and the external byte-order facts.
+It contains no local paths. The XCF is1499bytes and its sanitized PNG is129bytes.
+
+This qualifies this Windows F32 zlib producer case; it does not qualify every historical
+producer or version10. Repeated ordinary stock public-PDB saves using modern modes
+produced version11; no verified ordinary version10 authoring route is established.
+
 
 ## The Crafting Apps
 
